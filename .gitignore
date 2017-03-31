@@ -46,5 +46,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#Ignore the script itself
+#Ignore the scripts itself
 index.js
+export.sh
