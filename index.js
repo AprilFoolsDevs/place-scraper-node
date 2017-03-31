@@ -1,6 +1,7 @@
 var WebSocket = require('ws');
 var cheerio = require('cheerio');
 var request = require('request');
+var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host: '192.168.0.100',
 	user: 'reddit',
@@ -24,7 +25,8 @@ request('https://reddit.com/place', function (error, response, body) {
 		var message = JSON.parse(input).payload;
 		console.dir(message);
 		if(message.x && message.y && message.author && message.color) {
-		var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
-		connection.query(query);
-	}
+			var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
+			connection.query(query);
+		}
+	});
 });
