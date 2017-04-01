@@ -49,3 +49,8 @@ Temporary Items
 #Ignore the scripts itself
 index.js
 export.sh
+
+#config
+conf.json
+
+node_modules
