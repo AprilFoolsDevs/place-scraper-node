@@ -24,7 +24,7 @@ request('https://reddit.com/place', function (error, response, body) {
 		var d = new Date();
 		var message = JSON.parse(input).payload;
 		console.dir(message);
-		if(message.x && message.y && message.author && message.color) {
+		if((message.x || message.x === 0) && (message.y || message.y === 0) && message.author && (message.color || message.color === 0)) {
 			var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
 			connection.query(query);
 		}
