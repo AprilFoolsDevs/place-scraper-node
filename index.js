@@ -22,7 +22,7 @@ function getSocketURL(){
 }
 
 function isValidMessage(message){
-	return (message.x || message.x === 0) && (message.y || message.y === 0) && message.author && (message.color || message.color === 0));
+	return ((message.x || message.x === 0) && (message.y || message.y === 0) && message.author && (message.color || message.color === 0));
 }
 
 function createSocketHandler(){
