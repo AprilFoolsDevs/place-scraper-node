@@ -1,5 +1,6 @@
 # place
 Reddit's April Fools logs (Starting from Fri Mar 31 2017 20:26:06 GMT+0100)
+**update.csv is no longer updated on GitHub. Please go to moustacheminer.com/place/export.csv for an updated CSV every 5 minutes.**
 
 ## index.js
 This is the program that captures all the websocket data and sends the data to a mySQL database.
