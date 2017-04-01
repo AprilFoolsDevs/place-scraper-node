@@ -51,6 +51,6 @@ index.js
 export.sh
 
 #config
-conf.json
+config.json
 
 node_modules
