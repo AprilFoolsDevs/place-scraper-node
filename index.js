@@ -37,7 +37,7 @@ var incommingFrames = 0;
 
 //regisiter the
 function createSocketHandler(){
-
+  
 	getSocketURL()
 	.then( (wsurl) => {
 		var ws = new WebSocket(wsurl);
