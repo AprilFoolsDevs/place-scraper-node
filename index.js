@@ -64,8 +64,10 @@ function createSocketHandler(){
 		});
 
 		ws.on("open", () => {
+
 			// this will check to see if we have receieved packets within 5 seconds
 			frameTimer = setInterval(() => {
+
 				if(incomingFrames <= 0){
 					console.log("We havent received packets within 5 seconds, not possible server is broken.")
 					process.exit(0);
