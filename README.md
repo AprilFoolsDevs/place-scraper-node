@@ -1,10 +1,12 @@
-# place
-Reddit's April Fools logs (Starting from Fri Mar 31 2017 20:26:06 GMT+0100)  
+# place-scraper-node (Formerly https://github.com/moustacheminer/place)
+Intercepts the incoming websockets and pushes them into a mySQL database
 
-# **update.csv is no longer updated on GitHub. Please go to moustacheminer.com/place/export.csv for an updated CSV every 5 minutes.**
+## install
+Git clone this repo, and then install all the node modules by doing:
 
-## index.js
-This is the program that captures all the websocket data and sends the data to a mySQL database.
+```bash
+npm i
+```
 
-## export.csv
-This is NOT automatic. I have to manually grudge my way to get over 5MB of text off of the database and onto GitHub. This takes around 5 minutes, so I'll be doing this every hour (that I'm awake)
+## mySQL
+The mySQL config is inside config.default.json
