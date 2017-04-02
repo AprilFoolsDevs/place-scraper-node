@@ -33,7 +33,7 @@ function isValidMessage(message){
 }
 
 //global for keeping track of frams over time
-var incommingFrames = 0;
+var incomingFrames = 0;
 
 //keep this global so we dont keep making new websocket instances
 var ws;
@@ -59,7 +59,7 @@ function createSocketHandler(){
                 var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
                 connection.query(query);
 	        }
-			incommingFrames++;
+			incomingFrames++;
 
 		});
 
@@ -71,7 +71,7 @@ function createSocketHandler(){
 		ws.on("open", () => {
 
 			setInterval(() => {
-				if(incommingFrames <= 0){
+				if(incomingFrames <= 0){
 					console.log("We havent received packets within 5 seconds, not possible server is broken.")
 					createSocketHandler();
 				}
