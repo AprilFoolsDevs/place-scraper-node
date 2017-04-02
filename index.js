@@ -35,16 +35,25 @@ function isValidMessage(message){
 //global for keeping track of frams over time
 var incommingFrames = 0;
 
+//keep this global so we dont keep making new websocket instances
+var ws;
+
 //regisiter the
 function createSocketHandler(){
-  
+	//ensure that the object is dead before we create another ws instance
+	if(ws !== null){
+		ws = null;
+		delete ws;
+	}
+
+
 	getSocketURL()
 	.then( (wsurl) => {
-		var ws = new WebSocket(wsurl);
+		ws = new WebSocket(wsurl);
 		console.log("Connecting to " + wsurl);
 		ws.on('message', (input) => {
 	        var d = new Date();
-	    	console.log(input);
+	    	//console.log(input);
 	        var message = JSON.parse(input).payload;
 	        if(isValidMessage(message)) {
                 var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
