@@ -5,7 +5,7 @@ Intercepts the incoming websocket frams from [/r/place](https://reddit.com/r/pla
 Git clone this repo, and then install all the node modules by doing:
 
 ```bash
-npm i
+npm install
 ```
 
 ## Config
@@ -19,4 +19,17 @@ config.json:
 	"user": "reddit",
 	"database": "reddit"
 }
+```
+
+## Running
+Since this script will kill itself in the event of any issues it's going to be best to run it with either `nodemon` or `forever`
+
+You can install forever with `npm install forever -g` then:
+```bash
+forever start index.js
+```
+
+You can install nodemon with `npm install nodemon -g` then:
+```bash
+nodemon index.js
 ```

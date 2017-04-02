@@ -21,9 +21,11 @@ function getSocketURL(){
         rp('https://reddit.com/place')
         .then(function(body){
             var $ = cheerio.load(body);
-            wsurl = JSON.parse($('#config').text().slice(0,-1).substring(8)).place_websocket_url;
+            var wsurl = JSON.parse($('#config').text().slice(0,-1).substring(8)).place_websocket_url;
             resolve(wsurl)
-    	});
+    	}).catch((e) => {
+			reject(e)
+		});
     });
 }
 
@@ -32,20 +34,14 @@ function isValidMessage(message){
     return (message.x || message.x === 0) && (message.y || message.y === 0) && message.author && (message.color || message.color === 0);
 }
 
-//global for keeping track of frams over time
-var incommingFrames = 0;
+//global vars
+var incomingFrames;
 
-//keep this global so we dont keep making new websocket instances
 var ws;
+var frameTimer;
 
-//regisiter the
+//the handler that handles
 function createSocketHandler(){
-	//ensure that the object is dead before we create another ws instance
-	if(ws !== null){
-		ws = null;
-		delete ws;
-	}
-
 
 	getSocketURL()
 	.then( (wsurl) => {
@@ -53,34 +49,35 @@ function createSocketHandler(){
 		console.log("Connecting to " + wsurl);
 		ws.on('message', (input) => {
 	        var d = new Date();
-	    	//console.log(input);
 	        var message = JSON.parse(input).payload;
 	        if(isValidMessage(message)) {
                 var query = "INSERT INTO place (x, y, username, colour, time) VALUES (" + message.x + "," + message.y + ",'" + message.author + "'," + message.color + ",'" + d.getTime() + "');";
                 connection.query(query);
 	        }
-			incommingFrames++;
+			incomingFrames++;
 
 		});
 
 		ws.on("close", () => {
 	        console.log("We lost connection since the server was destroyed, let's reconnect :)");
-	        createSocketHandler();
+	       	process.exit(0);
 		});
 
 		ws.on("open", () => {
-
-			setInterval(() => {
-				if(incommingFrames <= 0){
+			// this will check to see if we have receieved packets within 5 seconds
+			frameTimer = setInterval(() => {
+				if(incomingFrames <= 0){
 					console.log("We havent received packets within 5 seconds, not possible server is broken.")
-					createSocketHandler();
+					process.exit(0);
 				}
-				incommingFrames = 0;
+
+				incomingFrames = 0;
 			}, 5000);
+
 		});
 
 	});
 }
 
-//create the initial socket connection
+//create the initial socket handler
 createSocketHandler();
